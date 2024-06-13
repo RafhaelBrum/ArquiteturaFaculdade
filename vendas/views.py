@@ -37,16 +37,27 @@ class SubGrupoCreateView(LoginRequiredMixin, AdminRequiredMixin, CreateView):
     template_name = 'vendas/subgrupo_form.html'
     success_url = reverse_lazy('index')
 
-class VendaCreateView(LoginRequiredMixin, CreateView):
+class VendaCreateView(CreateView):
     model = Venda
     fields = ['produto', 'quantidade']
     template_name = 'vendas/venda_form.html'
-    success_url = reverse_lazy('index')
+    success_url = '/'
 
     def form_valid(self, form):
-        form.instance.vendedor = self.request.user
-        return super().form_valid(form)
+        produto = form.cleaned_data['produto']
+        quantidade_vendida = form.cleaned_data['quantidade']
 
+        if produto.quantidade_comprado >= quantidade_vendida:
+            produto.quantidade_comprado -= quantidade_vendida
+            produto.save() 
+            
+            form.instance.vendedor = self.request.user
+            return super().form_valid(form)
+        else:
+            form.add_error('quantidade', 'Não há estoque suficiente para realizar esta venda.')
+
+            return self.form_invalid(form)
+        
 def index(request):
     return render(request, 'vendas/index.html')
 
