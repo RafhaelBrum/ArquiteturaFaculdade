@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .grupo {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+        }
+        .grupo h2 {
+            color: #333;
+        }
+        .subgrupo {
+            margin-left: 20px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .produto {
+            margin-left: 40px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Produtos</h1>
+        
+        {% for grupo in grupos %}
+        <div class="grupo">
+            <h2>{{ grupo.nome }}</h2>
+            
+            {% for subgrupo in subgrupos %}
+            {% if subgrupo.grupo == grupo %}
+            <div class="subgrupo">{{ subgrupo.nome }}</div>
+            
+            {% for produto in produtos %}
+            {% if produto.subgrupo == subgrupo %}
+            <div class="produto">{{ produto.nome }} - R$ {{ produto.preco_venda }} - Qtd: {{ produto.quantidade_comprado }}</div>
+            {% endif %}
+            {% endfor %}
+            
+            {% endif %}
+            {% endfor %}
+            
+        </div>
+        {% endfor %}
+        
+    </div>
+</body>
+</html>

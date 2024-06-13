@@ -66,3 +66,16 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, 'vendas/register.html', {'form': form})
+
+def lista_produtos(request):
+    grupos = Grupo.objects.all()
+    subgrupos = SubGrupo.objects.all()
+    produtos = Produto.objects.all()
+
+    context = {
+        'grupos': grupos,
+        'subgrupos': subgrupos,
+        'produtos': produtos,
+    }
+
+    return render(request, 'vendas/lista_produtos.html', context)
