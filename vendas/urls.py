@@ -9,4 +9,5 @@ urlpatterns = [
     path('subgrupo/add/', views.SubGrupoCreateView.as_view(), name='subgrupo-add'),
     path('venda/add/', views.VendaCreateView.as_view(), name='venda-add'),
     path('produtos/', views.lista_produtos, name='lista_produtos'),
+    path('visualizar_vendas/', views.visualizar_vendas, name='visualizar_vendas'),
 ]

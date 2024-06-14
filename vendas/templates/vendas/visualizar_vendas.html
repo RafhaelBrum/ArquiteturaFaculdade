@@ -1,0 +1,48 @@
+{% load static %}
+
+{% block content %}
+<h1>Visualizar Vendas</h1>
+
+<div>
+    {{ grafico_linha|safe }}
+</div>
+
+<div>
+    {{ grafico_barras|safe }}
+</div>
+
+<div>
+    {{ grafico_dispersao|safe }}
+</div>
+
+<div>
+    {{ grafico_pizza|safe }}
+</div>
+
+<div>
+    {{ grafico_barras_linha|safe }}
+</div>
+
+<h2>Produtos com Estoque Baixo</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Nome do Produto</th>
+            <th>Quantidade Comprada</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produto in produtos_estoque_baixo %}
+        <tr>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.quantidade_comprado }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">Nenhum produto com estoque baixo encontrado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
